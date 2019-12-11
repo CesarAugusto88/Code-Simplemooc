@@ -1,0 +1,183 @@
+mkdir code 'cria diretório code'
+cd code 'entra em code'
+
+virtualenv -p python3 venv 'cria pasta virtual do projeto'
+
+cd env 'para entrar na pasta'
+
+source bin/activate ou cd bin e em bin, . activate 'para ativar ambiente virtual'
+sudo apt install python3 python-django 'para instalar o pacote django'
+
+pip install django 'para instalar django'
+
+cd .. 'até voltar na pasta code'
+
+django-adimin.py startproject simplemooc 'starta pasta do projeto simplemooc'
+
+cd simplemooc/simplemooc/ 'entra em simplemooc'
+
+ls 'para ver arquivos e que contém manage.py que é usado em comandos'
+
+python manage.py runserver 'inicializa o servidor com a pagina do browser indicando o endereço: 127.0.0.1:8000 ou localhost:8000'
+
+'para sincronisar o servidor segui dois comandos:'
+python manage.py migrate auth
+python manage.py migrate --run-syncdb
+------------------------------------------------------------------------
+python manage.py startapp core 'cria uma aplicação/pasta chamada core(tabela Courses)'
+
+mv core simplemooc/ 'na pasta. move core para dentro de simplemooc'
+------------------------------------------------------------------------
+
+'em simplemooc/simplemooc abrindo o arquivo setting.py adiciona em INSTALLED_APPS:'
+'simplemooc.core',
+
+'também em simplemooc abrindo o arquivo urls.py configura-se os urls com:' 
+
+'depois em simplemooc/simplemooc/core abrindo o arquivo views.py configura-se uma função'
+
+TEMPLATES PARA CRIAR HTMLs
+python manage.py shell 'abre o shell do python'
+>>> from django.template import Template, Context
+>>> template = Template("Bem vindo: {{ usuario }}") 'atribui a template'
+>>> context = Context({"usuario": "Cesar"})         'atribui a context'
+>>> print(template.render(context))      'renderiza e manda printar na tela'
+>>> Bem vindo: Cesar                                'assim aparece o atribuido'
+
+'criar uma pasta templates dentro de core. Dijango vai reconhece-la'
+'criar um arquivo home.htlm dentro de templates escrito Usuario: {{ usurio }}'
+'modificar a função no arquivo views.py usando o render'
+
+'pegar o código de base.html e colar no arquivo home.html'
+----------------------------------
+diretórios e como ativar ambiente
+---------------------------------
+cesar@debian:~/code/venv$ cd bin
+cesar@debian:~/code/venv/bin$ source ./activate
+(venv) cesar@debian:~/code/venv/bin$ cd ..
+(venv) cesar@debian:~/code/venv$ ls
+bin  include  lib
+(venv) cesar@debian:~/code/venv$ cd ..
+(venv) cesar@debian:~/code$ ls
+rotina-projeto-django.txt  simplemooc  venv
+(venv) cesar@debian:~/code$ cd simplemooc/
+(venv) cesar@debian:~/code/simplemooc$ ls
+db.sqlite3  manage.py  simplemooc
+(venv) cesar@debian:~/code/simplemooc$ python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2019 - 23:39:11
+Django version 2.2.1, using settings 'simplemooc.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+-------------------------------------------
+Para migrar as novas tabelas para o banco
+-------------------------------------------
+Your models have changes that are not yet reflected in a migration, and so won't be applied.
+-->  Run 'manage.py makemigrations' to make new migrations, and then 
+-->  re-run 'manage.py migrate' to apply them.
+
+-- módulos para Tratamento de imagens 
+pip install Pillow
+
+-- Para migrar o banco de dados e criar tabelas no sqlitestudio
+python manage.py migrate
+
+-- acesso ao Banco de dados com shell do python com o projeto rodando
+python manage.py shell
+-- importa a classe curso (>>> já é do terminal shell)
+>>> from simplemooc.courses.models import Courses
+>>> course = Courses()
+-- Atribuir nomes aos 'Campos'
+>>> course.name = "Python na Web com Django"
+>>> course.slug = 'django'
+from datetime importe date
+-- não é obrigatório mas tá colocando
+>>> course.start_date = date.today()
+-- metodos importados da classe
+>>> course.save()
+-- quando salva o Django seta o id automáticamente
+-- id auto gerado do Django
+-- porém pode-se criar algum campo com o nome
+-- primary_key=True e este será o valor do id
+>>> course.id
+1
+>>> course.pk -- pk atalho para id
+1
+-- Django só aceita campo com chave primária único
+-- ele não aceita chave primária composta
+-- salvar, mostrar data de creação, mostrar data de atualização, deletar obj
+>>> course.save()
+>>> course.created_at
+datetime.datetime(2019, 10, 24, 15, 31, 41, 636160, tzinfo=<UTC>)
+>>> course.updated_at <- não funcionou
+datetime.datetime()
+>>> course.delete() <- não deletou apareceu dicionário
+-----------------------------------------------------------------------------
+-- Para executar migração pediu makemigrations para depois o migrate
+python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, courses, sessions
+Running migrations:
+  No migrations to apply.
+  Your models have changes that are not yet reflected in a migration, and so won't be applied.
+  Run 'manage.py makemigrations' to make new migrations, and then re-run 'manage.py migrate' to apply them.
+python manage.py makemigrations
+Migrations for 'courses':
+  simplemooc/courses/migrations/0002_auto_20191024_1606.py
+    - Alter field image on courses
+(venv) cesar@debian:~/code/simplemooc$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, courses, sessions
+Running migrations:
+  Applying courses.0002_auto_20191024_1606... OK
+-----------------------------------------------------------------------------
+--Comando para ver o sql geral do banco, pede o nome da aplicação
+python manage.py sqlall courses <-- foi removido
+-- usar sqlmigrate
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+python manage.py shell
+-- simplemooc.courses.models é o caminho dos diretórios (settings.py)
+>>> from simplemooc.courses.model import Courses
+>>> from datetime import date -- para start_date, created_at e update_at
+>>> django = Courses(name='Python com Django', slug='django')
+>>> django.save()
+>>> django.pk
+1 
+-- ... criado outros objetos
+-- 'object' é um método importante de models
+>>> courses = Courses.objects.all()
+>>> for courses in courses:
+>>> 	print(courses.name)
+>>> courses = Courses.objects.filter(slug='django')
+>>> courses -- retorna o que tem campo slug = dajngo
+>>> courses[0].name -- retorna o nome
+>>> courses = Courses.objects.filter(slug='djago'.filter(name='Python')
+>>> courses -- não vai retornar nda com django E Python
+-- para encontrar com nome que 'icontains' Python (__icontains):
+>>> courses = Courses.objects.filter(name__icontains="Python')
+-- tipo da Classe objects
+>>> type(Courses.objects) -- objects método Manager
+-- tipo do objeto
+>>> type(courses) -- objeto com mais funções query.QuerySet
+-- método get_queryset retorna quantos objetos
+>>> Courses.objects.get_queryset()
+>>> courses
+>>> courses.delete()
+-- Modo rápido pra criar objetos Courses
+>>> Courses.objects.create(name='Python', slug='python')
+-- USANDO SEARCH criado na class CoursesManager
+-- no final do arquivo models.py objects = CoursesManager()
+>>> Courses.objects.search('python')
+
+-- Em admin.py add:
+from .models import Courses
+admin.site.register(Courses)
+-- Rodar runserver e no broawser localhost:8000/admin/
+-- se não criou usuário admin, criar:
+python manager.py createsuperuser
+----------------------------------------------------------------------------
+
