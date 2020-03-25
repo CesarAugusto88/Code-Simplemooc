@@ -1,4 +1,3 @@
-<!-- Herança com django inicio do block e final do block -->
 <!doctype html>
 {% load static %}
 <html lang="en">
@@ -6,26 +5,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
-    <title>Construtora Dolomita<!--Simple MOOC--></title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">   <!-- caminho relativo a pasta static -->
+    <title>Simple MOOC</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 </head>
 <body>
 <div class="header">
     <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-        <a class="pure-menu-heading" href="{% url 'home' %}">CONSTRUTORA DOLOMITA<!--SIMPLE MOOC--></a>
+        <a class="pure-menu-heading" href="{% url 'core:home' %}">SIMPLE MOOC</a>
         <ul>
-            <li class="pure-menu-selected"><a href="{% url 'home' %}">Início</a></li>
-            <li><a href="#">Obras<!--Cursos--></a></li>
-            <li><a href="{% url 'contact' %}">Contato</a></li>
+            <li class="pure-menu-selected"><a href="{% url 'core:home' %}">Início</a></li>
+            <li><a href="#">Cursos</a></li>
+            <li><a href="{% url 'core:contact' %}">Contato</a></li>
         </ul>
     </div>
 </div>
 <div class="content">
-	{% block content %}{% endblock %}  <!--serve como place holder para os outros colocar conteudo -->
-	<div class="footer">
-        Construtora Dolomita - Campos do Jordão/SP
-        <!--Simple MOOC - Uma simples plataforma de ensino a distância-->
+    {% block content %}{% endblock %}
+    <div class="footer">
+        Simple MOOC - Uma simples plataforma de ensino a distância
     </div>
 </div>
 <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
