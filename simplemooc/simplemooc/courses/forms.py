@@ -4,6 +4,8 @@ from django.conf import settings
 
 from simplemooc.core.mail import send_mail_template
 
+from .models import Comment
+
 
 class ContactCourse(forms.Form):
 
@@ -36,6 +38,13 @@ class ContactCourse(forms.Form):
     #     }
     #     message = message % context
     #     send_mail(
-    #         subject, message, settings.DEFAULT_FROM_EMAIL, 
+    #         subject, message, settings.DEFAULT_FROM_EMAIL,
     #         [settings.CONTACT_EMAIL]
     #     )
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['comment']
