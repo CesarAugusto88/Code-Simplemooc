@@ -4,7 +4,9 @@ from django.utils import timezone
 
 from simplemooc.core.mail import send_mail_template
 
+from django.urls import reverse
 
+    
 class CourseManager(models.Manager):
 
     def search(self, query):
@@ -36,6 +38,12 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+
+    #def get_absolute_url(self):
+    #    return reverse(
+    #        'tc_view_specific_version_page', 
+    #        args=[self.slug, self.version_number]) 
+    
     #@models.permalink
     def get_absolute_url(self):
         return ('courses:details', (), {'slug': self.slug})

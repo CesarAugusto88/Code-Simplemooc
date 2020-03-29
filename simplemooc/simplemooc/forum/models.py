@@ -50,7 +50,7 @@ class Reply(models.Model):
 
     def __str__(self):
 
-        return self.reply[:100]
+        return str(self.reply)[:100] + "..."
 
 
     class Meta:

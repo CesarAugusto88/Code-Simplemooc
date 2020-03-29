@@ -6,6 +6,7 @@ app_name = 'courses'
 urlpatterns = [
 	path('', views.index, name='index'),
 	#path('(?P<pk>\d+)/', views.details, name='details'),
+	#não está encontrando detalhes com palavras na url...
     re_path(r'^(?P<slug>[\w_-]+)/$', views.details, name='details'),
 	re_path(r'^(?P<slug>[\w_-]+)/inscricao/$', views.enrollment, name='enrollment'),
 	re_path(r'^(?P<slug>[\w_-]+)/cancelar-inscricao/$', views.undo_enrollment, name='undo_enrollment'),
