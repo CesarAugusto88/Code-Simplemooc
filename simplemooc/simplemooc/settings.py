@@ -146,3 +146,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
+# redirecionar a url do login e logout
+#LOGIN_REDIRECT_URL = '/'
+#LOGOUT_URL = '/accounts/login'
