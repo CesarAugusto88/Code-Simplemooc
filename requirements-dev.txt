@@ -26,6 +26,6 @@ static3==0.7.0
 systemd-python==234
 Tempita==0.5.1
 typed-ast==1.4.1
-urllib3==1.25.7
+urllib3==1.26.5
 wrapt==1.11.2
 zipp==2.1.0
